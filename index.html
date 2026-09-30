@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حراج Blox Fruits - المنصة الموثوقة</title>
+  
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #fff; margin: 0; padding: 20px; }
+    .container { max-width: 900px; margin: auto; background: #1e1e1e; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+    h1, h2, h3 { text-align: center; color: #00e676; }
+    
+    .auth-box { background: #282828; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid #444; }
+    .btn-google { background: #4285F4; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; font-size: 14px; }
+    .btn-google:hover { background: #357ae8; }
+
+    .offers-grid { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .offer-card { flex: 1; min-width: 240px; background: #2a2a2a; border: 2px solid #444; border-radius: 10px; padding: 15px; text-align: center; position: relative; }
+    .offer-card.legendary { border-color: #ffd700; background: #2d2600; }
+    .offer-card.royal { border-color: #9c27b0; background: #23092b; }
+
+    .offer-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #ffd700; color: #000; font-weight: bold; padding: 2px 10px; border-radius: 12px; font-size: 11px; white-space: nowrap; }
+    .offer-badge.purple { background: #e040fb; color: #fff; }
+
+    .offer-title { font-size: 17px; font-weight: bold; margin-bottom: 8px; color: #fff; }
+    .offer-price { font-size: 20px; color: #00e676; font-weight: bold; margin-bottom: 5px; }
+    .offer-desc { font-size: 12px; color: #ccc; margin-bottom: 10px; line-height: 1.4; }
+
+    .btn-subscribe { background: #ff9800; color: #000; font-weight: bold; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; margin-top: 5px; }
+    .btn-subscribe:hover { background: #fb8c00; }
+
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; }
+    select, input, textarea, button { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #2b2b2b; color: #fff; box-sizing: border-box; }
+    
+    .btn-submit { background: #00e676; color: #000; font-weight: bold; cursor: pointer; border: none; margin-top: 10px; font-size: 16px; }
+    .btn-submit:hover { background: #00c853; }
+
+    .card { background: #252525; border: 1px solid #333; padding: 15px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .seller-link { color: #00bcd4; cursor: pointer; text-decoration: underline; font-weight: bold; }
+    .seller-link:hover { color: #80deea; }
+    .badge-perm { background: #e91e63; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
+    .badge-phys { background: #2196f3; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
+    .badge-vip { background: #ffd700; color: #000; font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+    .badge-admin { background: #ff1744; color: #fff; font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 11px; box-shadow: 0 0 8px #ff1744; }
+
+    /* محرك البحث عن المستخدمين */
+    .search-box { background: #222; border: 1px solid #00e676; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+    .users-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; max-height: 150px; overflow-y: auto; }
+    .user-item { background: #2d2d2d; padding: 8px 12px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
+
+    /* لوحة الأدمن السرية */
+    #adminPanel { display: none; background: #1b2838; border: 2px solid #00e676; padding: 20px; border-radius: 10px; margin-bottom: 25px; }
+    .generator-box { background: #101822; padding: 15px; border-radius: 8px; text-align: center; margin-top: 10px; }
+    .generated-code { font-size: 26px; color: #ffd700; font-weight: bold; letter-spacing: 3px; margin: 15px 0; background: #222; padding: 10px; border-radius: 5px; border: 1px dashed #ffd700; }
+    .reports-box { background: #221414; border: 1px solid #ff1744; padding: 15px; border-radius: 8px; margin-top: 20px; }
+    .report-card { background: #2d1b1b; padding: 10px; border-radius: 5px; margin-bottom: 10px; border-right: 4px solid #ff1744; }
+
+    /* النوافذ المنبثقة (Modal) */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
+    .modal-content { background: #222; border: 2px solid #00e676; width: 90%; max-width: 450px; padding: 20px; border-radius: 10px; position: relative; }
+    .close-btn { position: absolute; top: 10px; left: 15px; background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; width: auto; }
+
+    /* نافذة الشات الخاص */
+    #chatModal { display: none; position: fixed; bottom: 10px; left: 10px; width: 320px; background: #1f1f1f; border: 2px solid #00e676; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.8); z-index: 1000; }
+    .chat-header { background: #2c2c2c; padding: 10px; border-bottom: 1px solid #444; display: flex; justify-content: space-between; align-items: center; }
+    .chat-body { height: 200px; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; background: #141414; }
+    .chat-msg { background: #2b2b2b; padding: 6px 10px; border-radius: 6px; font-size: 13px; max-width: 85%; }
+    .chat-msg.me { background: #005c4b; align-self: flex-end; }
+    .chat-input-area { display: flex; padding: 5px; gap: 5px; background: #222; }
+    .btn-chat { background: #00bcd4; color: #000; border: none; padding: 5px 10px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 12px; margin-top: 5px; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>حراج Blox Fruits - المنصة الموثوقة</h1>
+
+  <!-- لوحة الأدمن السرية -->
+  <div id="adminPanel">
+    <h2 id="adminWelcomeTitle" style="color: #ffd700; margin-top: 0;"></h2>
+    <p>أهلاً بك في لوحة تحكم الإدارة. يمكنك توليد الأكواد ومراجعة البلاغات وتبنيد الحسابات:</p>
+    
+    <div class="generator-box">
+      <label>اختر باقة الاشتراك للعميل:</label>
+      <select id="adminPlanSelect" style="max-width: 300px; margin: 10px auto;">
+        <option value="3_MONTHS">باقة 3 شهور (20 ريال)</option>
+        <option value="4_MONTHS">باقة 4 شهور (24 ريال)</option>
+        <option value="12_MONTHS">اشتراك سنة كاملة (57.5 ريال)</option>
+      </select>
+      <br>
+      <button onclick="spinWheelAndGenerateCode()" style="background: #00e676; color: #000; font-weight: bold; width: auto; padding: 10px 25px;">🎰 لف العجلة وتوليد كود 5 خانات</button>
+      
+      <div id="codeDisplayArea" style="display: none;">
+        <div style="margin-top: 15px; color: #aaa; font-size: 13px;">الكود الجديد المولد:</div>
+        <div id="generatedCode" class="generated-code">-----</div>
+        <small style="color: #00e676;">✔️ تم تسجيل الكود في القاعدة، يمكنك إرساله للزبون الآن!</small>
+      </div>
+    </div>
+
+    <!-- قسم البلاغات الواردة للأدمن -->
+    <div class="reports-box">
+      <h3 style="color: #ff1744; margin-top: 0;">🚨 صندوق البلاغات الواردة من المستخدمين</h3>
+      <div id="adminReportsContainer">لا توجد بلاغات جديدة حالياً.</div>
+    </div>
+  </div>
+
+  <!-- قسم تسجيل الدخول عبر Google -->
+  <div class="auth-box">
+    <div id="userLoggedOut">
+      <h3>تسجيل الدخول للموقع</h3>
+      <p style="font-size: 13px; color: #ccc;">سجل بدقيقة واحدة باستخدام حساب Google للتداول وتوثيق حسابك</p>
+      <button class="btn-google" onclick="loginWithGoogle()">🔑 المتابعة باستخدام حساب Google</button>
+    </div>
+    <div id="userLoggedIn" style="display: none;">
+      <span id="userInfo" style="font-weight: bold; color: #00e676;"></span>
+      <div style="margin-top: 10px; max-width: 300px; margin-right: auto; margin-left: auto;">
+        <input type="text" id="robloxUsername" placeholder="أدخل اسم حسابك في Roblox" style="text-align: center; margin-bottom: 5px;">
+        <button onclick="saveRobloxUsername()" style="background: #2196f3; border: none; font-weight: bold;">حفظ اسم حساب Roblox</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔎 محرك البحث عن المستخدمين المسجلين بالموقع -->
+  <div class="search-box">
+    <label style="color: #00e676; font-size: 16px;">🔎 البحث عن الأعضاء المسجلين بالموقع:</label>
+    <input type="text" id="userSearchInput" oninput="searchUsers()" placeholder="اكتب اسم الحساب للبحث..." style="margin-top: 8px;">
+    <div class="users-list" id="usersListContainer"></div>
+  </div>
+
+  <!-- عرض باقات الاشتراكات -->
+  <h2>🔥 باقات اشتراك البائع المعتمد (VIP)</h2>
+  <div class="offers-grid">
+    <div class="offer-card">
+      <div class="offer-title">باقة 3 شهور</div>
+      <div class="offer-price">موبايلي 20 ريال</div>
+      <div class="offer-desc">إمكانية البيع + شارة بائع معتمد ✔️ لمدة 90 يوم</div>
+      <button class="btn-subscribe" onclick="handleSubscribeClick('3_MONTHS')">طلب الاشتراك</button>
+    </div>
+
+    <div class="offer-card legendary">
+      <div class="offer-badge">🔥 الأكثر مبيعاً</div>
+      <div class="offer-title" style="color: #ffd700;">باقة 4 شهور</div>
+      <div class="offer-price">موبايلي 24 ريال</div>
+      <div class="offer-desc">زد 4 ريال بس واكسب <strong>شهر كامل زيادة مجاناً!</strong></div>
+      <button class="btn-subscribe" onclick="handleSubscribeClick('4_MONTHS')">طلب الاشتراك</button>
+    </div>
+
+    <div class="offer-card royal">
+      <div class="offer-badge purple">👑 العرض الملكي السنوي</div>
+      <div class="offer-title" style="color: #e040fb;">اشتراك سنة كاملة</div>
+      <div class="offer-price">بطاقة 50 ريال (57.5 ريال)</div>
+      <div class="offer-desc">إمكانية البيع لا نهائي وتأكيد توثيق لمدة سنة كاملة (365 يوم)</div>
+      <button class="btn-subscribe" onclick="handleSubscribeClick('12_MONTHS')">طلب الاشتراك</button>
+    </div>
+  </div>
+
+  <!-- قسم إدخال كود التفعيل للزبائن -->
+  <div class="form-group" style="background: #282828; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
+    <label>لديك كود تفعيل VIP مكون من 5 خانات؟</label>
+    <div style="display: flex; gap: 10px;">
+      <input type="text" id="activationCodeInput" placeholder="أدخل الكود المكون من 5 خانات هنا">
+      <button class="btn-submit" style="width: 35%; margin-top: 0;" onclick="activateVIPCode()">تفعيل الحساب</button>
+    </div>
+  </div>
+
+  <!-- نموذج إضافة عرض (خاص بالـ VIP والأدمن) -->
+  <h2>إضافة عرض جديد (خاص بالـ VIP والأدمن)</h2>
+  <div class="form-group">
+    <label>اختر الفاكهة:</label>
+    <select id="fruitSelect" onchange="updatePriceLimits()"></select>
+  </div>
+
+  <div class="form-group">
+    <label>نوع الفاكهة:</label>
+    <select id="typeSelect" onchange="updatePriceLimits()">
+      <option value="physical">عادية (Physical)</option>
+      <option value="permanent">أبدية (Permanent)</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>السعر المطلوب (بالريال):</label>
+    <input type="number" id="priceInput" placeholder="أدخل السعر">
+    <small id="priceHint" style="color: #aaa;"></small>
+  </div>
+
+  <button class="btn-submit" onclick="addListing()">نشر العرض</button>
+
+  <!-- قائمة العروض -->
+  <div style="margin-top: 30px;">
+    <h2>العروض المتاحة بالسوق</h2>
+    <div id="listingsContainer"></div>
+  </div>
+</div>
+
+<!-- نافذة البروفايل (Profile Modal) -->
+<div id="profileModal" class="modal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('profileModal')">✕</button>
+    <h2 id="profRobloxUser" style="color: #00bcd4; margin-top: 0;"></h2>
+    
+    <div style="background: #181818; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+      <div>🤝 عدد الصفقات الناجحة: <strong id="profTradesCount" style="color: #00e676;">0</strong></div>
+      <div style="margin-top: 5px;">⭐ التقييم العام: <strong id="profRating" style="color: #ffd700;">5.0 / 5</strong></div>
+    </div>
+
+    <!-- تقديم بلاغ -->
+    <button onclick="openReportModal()" style="background: #ff1744; color: #fff; font-weight: bold; border: none; padding: 8px;">🚨 تقديم بلاغ عن هذا المستخدم (نصب / غش)</button>
+  </div>
+</div>
+
+<!-- نافذة تقديم البلاغ (Report Modal) -->
+<div id="reportModal" class="modal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('reportModal')">✕</button>
+    <h3 style="color: #ff1744; margin-top: 0;">تقديم بلاغ ضد: <span id="reportTargetUser"></span></h3>
+    
+    <div class="form-group">
+      <label>سبب الشكوى أو تفاصيل النصب:</label>
+      <textarea id="reportReasonInput" rows="3" placeholder="اشرح ماذا حدث معك بالضبط..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>رابط الدليل (فيديو / صورة / Imgur / YouTube):</label>
+      <input type="text" id="reportProofInput" placeholder="ضع رابط الصورة أو الفيديو هنا">
+    </div>
+
+    <button class="btn-submit" style="background: #ff1744; color: #fff;" onclick="submitReport()">إرسال البلاغ للإدارة</button>
+  </div>
+</div>
+
+<!-- نافذة الشات الخاص المباشر -->
+<div id="chatModal">
+  <div class="chat-header">
+    <span id="chatTitle" style="font-weight: bold; color: #00e676; font-size: 13px;">شات خاص</span>
+    <button onclick="closeChat()" style="background:none; border:none; color:#fff; cursor:pointer; font-weight:bold; width:auto; padding:0;">✕</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-input-area">
+    <input type="text" id="chatInput" placeholder="اكتب رسالتك للاتفاق..." style="padding: 5px;">
+    <button onclick="sendChatMessage()" style="width: 30%; padding: 5px; background: #00e676; color: #000; font-weight: bold;">إرسال</button>
+  </div>
+</div>
+
+<script>
+  const ADMIN_YASER_CODE = "Y4s3r7X";
+  const ADMIN_ASEEL_CODE = "A5e3l9Z";
+
+  let subscribeClickCount = 0;
+  let clickTimer = null;
+
+  let generatedVIPCodes = JSON.parse(localStorage.getItem("blox_generated_vip_codes")) || [];
+  let currentUser = JSON.parse(localStorage.getItem("blox_user")) || null;
+  let listings = JSON.parse(localStorage.getItem("blox_listings")) || [];
+  let reports = JSON.parse(localStorage.getItem("blox_reports")) || [];
+  let bannedUsers = JSON.parse(localStorage.getItem("blox_banned_users")) || [];
+  let registeredUsers = JSON.parse(localStorage.getItem("blox_registered_users")) || ["KINGOFVOLCANO7", "zxcvbnm19733"];
+  let userProfiles = JSON.parse(localStorage.getItem("blox_user_profiles")) || {};
+
+  let currentProfileTarget = null;
+
+  /* 🍎 قائمة الفواكه كاملة ومحدثة مع الإضافات الجديدة */
+  const fruitsData = [
+    { name: "Rocket", minPhysical: 1, minPerm: 15 },
+    { name: "Spin", minPhysical: 1, minPerm: 15 },
+    { name: "Blade", minPhysical: 2, minPerm: 20 },
+    { name: "Flame", minPhysical: 3, minPerm: 25 },
+    { name: "Dark", minPhysical: 3, minPerm: 25 },
+    { name: "Magnet", minPhysical: 3, minPerm: 30 },
+    { name: "Sand", minPhysical: 4, minPerm: 35 },
+    { name: "Spider", minPhysical: 5, minPerm: 40 },
+    { name: "Love", minPhysical: 5, minPerm: 45 },
+    { name: "Quake", minPhysical: 6, minPerm: 50 },
+    { name: "Light", minPhysical: 7, minPerm: 60 },
+    { name: "Magma", minPhysical: 8, minPerm: 65 },
+    { name: "Gravity", minPhysical: 10, minPerm: 90 },
+    { name: "Blizzard", minPhysical: 12, minPerm: 100 },
+    { name: "Shadow", minPhysical: 14, minPerm: 110 },
+    { name: "Buddha", minPhysical: 15, minPerm: 120 },
+    { name: "Portal", minPhysical: 20, minPerm: 140 },
+    { name: "Control", minPhysical: 25, minPerm: 150 },
+    { name: "Venom", minPhysical: 25, minPerm: 150 },
+    { name: "Mammoth", minPhysical: 28, minPerm: 160 },
+    { name: "T-Rex", minPhysical: 30, minPerm: 170 },
+    { name: "Lightning", minPhysical: 32, minPerm: 175 },
+    { name: "Dough", minPhysical: 35, minPerm: 180 },
+    { name: "Gas", minPhysical: 45, minPerm: 210 },
+    { name: "Yeti", minPhysical: 50, minPerm: 230 },
+    { name: "Tiger", minPhysical: 55, minPerm: 240 },
+    { name: "Kitsune", minPhysical: 60, minPerm: 250 },
+    { name: "Dragon", minPhysical: 65, minPerm: 260 }
+  ];
+
+  window.onload = () => {
+    checkBannedStatus();
+    updateAuthUI();
+    populateFruits();
+    updatePriceLimits();
+    renderListings();
+    renderAdminReports();
+    searchUsers();
+  };
+
+  function checkBannedStatus() {
+    if (currentUser && currentUser.robloxUser && bannedUsers.includes(currentUser.robloxUser)) {
+      alert("⛔ تم تبنيد حسابك من قبل الإدارة بسبب مخالفة الشروط والنصب!");
+      currentUser = null;
+      localStorage.removeItem("blox_user");
+    }
+  }
+
+  function handleSubscribeClick(plan) {
+    subscribeClickCount++;
+    if (clickTimer) clearTimeout(clickTimer);
+    
+    clickTimer = setTimeout(() => {
+      if (subscribeClickCount < 7) {
+        alert("الرجاء التواصل مع الأدمن KINGOFVOLCANO7 أو zxcvbnm19733 وإعطائهم رمز القسيمة، وسوف يعطونك كود تفعيل مكون من 5 خانات (حروف أو أرقام كبيرة أو صغيرة) لتركيبه وتفعيل حسابك!");
+      }
+      subscribeClickCount = 0;
+    }, 2000);
+
+    if (subscribeClickCount === 7) {
+      clearTimeout(clickTimer);
+      subscribeClickCount = 0;
+      promptAdminAccess();
+    }
+  }
+
+  function promptAdminAccess() {
+    const code = prompt("🔐 أدخل كود الإدارة السرّي للوصول للوحة التحكم:");
+    if (!code) return;
+
+    if (code === ADMIN_YASER_CODE) {
+      if (!currentUser) currentUser = { email: "yaser_admin@blox.com", robloxUser: "KINGOFVOLCANO7" };
+      currentUser.isAdmin = true;
+      currentUser.isVIP = true;
+      localStorage.setItem("blox_user", JSON.stringify(currentUser));
+      openAdminPanel("مرحباً بك أيها المطور ياسر 👑 (KINGOFVOLCANO7)");
+    } else if (code === ADMIN_ASEEL_CODE) {
+      if (!currentUser) currentUser = { email: "aseel_admin@blox.com", robloxUser: "zxcvbnm19733" };
+      currentUser.isAdmin = true;
+      currentUser.isVIP = true;
+      localStorage.setItem("blox_user", JSON.stringify(currentUser));
+      openAdminPanel("مرحباً بك أيها الأدمن أصيل 🛡️ (zxcvbnm19733)");
+    } else {
+      alert("❌ كود أدمن غير صحيح!");
+    }
+    updateAuthUI();
+  }
+
+  function openAdminPanel(welcomeMessage) {
+    document.getElementById("adminPanel").style.display = "block";
+    document.getElementById("adminWelcomeTitle").textContent = welcomeMessage;
+    renderAdminReports();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function spinWheelAndGenerateCode() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let newCode = "";
+    
+    do {
+      newCode = "";
+      for (let i = 0; i < 5; i++) {
+        newCode += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+    } while (generatedVIPCodes.includes(newCode));
+
+    generatedVIPCodes.push(newCode);
+    localStorage.setItem("blox_generated_vip_codes", JSON.stringify(generatedVIPCodes));
+
+    document.getElementById("codeDisplayArea").style.display = "block";
+    document.getElementById("generatedCode").textContent = newCode;
+  }
+
+  function activateVIPCode() {
+    const code = document.getElementById("activationCodeInput").value.trim();
+    if (!code) return alert("أدخل الكود أولاً!");
+
+    if (generatedVIPCodes.includes(code)) {
+      if (!currentUser) return alert("يرجى تسجيل الدخول بحساب Google أولاً ليتم توثيق حسابه بالـ VIP!");
+      
+      currentUser.isVIP = true;
+      localStorage.setItem("blox_user", JSON.stringify(currentUser));
+      
+      generatedVIPCodes = generatedVIPCodes.filter(c => c !== code);
+      localStorage.setItem("blox_generated_vip_codes", JSON.stringify(generatedVIPCodes));
+
+      alert("🎉 مبروك! تم تفعيل اشتراكك كـ بائع معتمد VIP بنجاح.");
+      updateAuthUI();
+      renderListings();
+    } else {
+      alert("❌ كود التفعيل غير صحيح أو تم استخدامه من قبل!");
+    }
+  }
+
+  function loginWithGoogle() {
+    const fakeEmail = prompt("أدخل بريدك الإلكتروني للتسجيل الس
